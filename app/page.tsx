@@ -30,12 +30,12 @@ export default function Home() {
   const [ price, setPrice ] = useState("");
   const [ cost, setCost ] = useState("");
   const [ stock, setStock ] = useState("");
-  // const [ uuid, setUuid ] = useState("");
+  const [ uuid, setUuid ] = useState("");
 
   // console.log(GetItems());
   let products = GetItems();
   const uId = Object.keys(products).length+1;
-  console.log(uId)
+  // console.log(uId)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ export default function Home() {
 
   const handleUpdate = async (e: any) => {
     e.preventDefault();
-    let uuid = uId-1;
+    // let uid = uuid+1;
     // console.log(uuid);
     updateItemData(uuid, name, category , option , price , cost , stock);
   }
@@ -236,6 +236,13 @@ export default function Home() {
                     >
                       <div className="flex">
                         <div className="flex justify-around pr-2 pb-2">
+                          <Input 
+                              type="text" 
+                              placeholder="currrent index" 
+                              className="mr-2" 
+                              value={item.uId}
+                              onChange={(e) => setUuid(item.uId)}
+                            />
                           <Input 
                             type="text" 
                             placeholder={item.category} 

@@ -6,6 +6,7 @@ import {
   push,
   update,
   set,
+  child,
 } from "firebase/database";
 
 import { database } from "../database/config";
@@ -55,37 +56,36 @@ export function GetItems() {
 export function postItemData(uId: any ,name: any , category: any , option: any , price: any , cost: any , stock: any) {
     // const db = getDatabase();
     set(ref(database, 'item' + uId ), {
-      name: name,
-      category: category,
-      option : option,
-      price: price,
-      cost: cost,
-      stock: stock,
+        uId: uId,
+        name: name,
+        category: category,
+        option : option,
+        price: price,
+        cost: cost,
+        stock: stock,
     });
 }
 
-export function updateItemData(uuid: any, name: any, category: any , option: any , price: any , cost: any , stock: any) {
-  
+export function updateItemData(uid: any,name: any, category: any , option: any , price: any , cost: any , stock: any) {
     const dbRef = ref(database);
-    onValue(dbRef, (snapshot) => {
-      snapshot.forEach((childSnapshot) => {
-        if (uuid == childSnapshot.exists()) {
-          // console.log(snapshot.val());
-          update(ref(database), {
-            uId: uuid,
-            name: name,
-            category: category,
-            option: option,
-            price: price,
-            cost: cost,
-            stock: stock
-        });
-        console.log(uuid == childSnapshot.exists())
-        console.log(childSnapshot.exists());
-        } else {
-          console.log("No data available");
-        }
-      });
+
+    // A post entry.
+    // const postData = {
+    //     name: name,
+    //     category: category,
+    //     option: option,
+    //     price: price,
+    //     cost: cost,
+    //     stock: stock
+    // };
+    
+    set(ref(database, 'item' + uid), {
+        name: name,
+        category: category,
+        option: option,
+        price: price,
+        cost: cost,
+        stock: stock
     });
 
     // return update(ref(database), {
