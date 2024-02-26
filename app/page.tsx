@@ -43,12 +43,12 @@ export default function Home() {
           <div>
             <span className="text-6xl font-bold">Products</span>
           </div>
-          <AddItems></AddItems>
+          <AddItems />
         </div>
         {/* Contents */}
         
         {/* First Product Card */}
-        <GetItems></GetItems>
+        <GetItems/>
       </div>
     </main>
   );
