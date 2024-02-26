@@ -72,7 +72,7 @@ export function AddItems() {
       });
     })
 
-  console.log(products);
+  // console.log(products);
   const uId = Object.keys(products).length+1;
 
     writeUserData(uId, name, category , option , price , cost , stock);
@@ -92,21 +92,54 @@ export function AddItems() {
               <DialogHeader>
                 <DialogTitle>Add Product</DialogTitle>
               </DialogHeader>
-              <form action="" onSubmit={handleSubmit} className="flex flex-col">
+              <form 
+                action="" 
+                onSubmit={handleSubmit} 
+                className="flex flex-col"
+              >
                 <div className="flex">
                   <div className="flex justify-around pr-2 pb-2">
-                    <Input type="text" placeholder="Category" className="mr-2" value={category}
-                    onChange={(e) => setCategory(e.target.value)}/>
-                    <Input type="text" placeholder="Name" className="pr-2" value={name}
-                    onChange={(e) => setName(e.target.value)}/>
-                    <Input type="text" placeholder="Options (small, medium, large etc.)" className="pr-2" value={option}
-                    onChange={(e) => setOption(e.target.value)}/>
-                    <Input type="text" placeholder="Price" className="pr-2" value={price}
-                    onChange={(e) => setPrice(e.target.value)}/>
-                    <Input type="text" placeholder="Cost" className="pr-2" value={cost}
-                    onChange={(e) => setCost(e.target.value)}/>
-                    <Input type="number" placeholder="Stock" value={stock}
-                    onChange={(e) => setStock(e.target.value)}/>
+                    <Input 
+                      type="text" 
+                      placeholder="Category" 
+                      className="mr-2" 
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder="Name" 
+                      className="pr-2" 
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder="Options (small, medium, large etc.)" 
+                      className="pr-2" 
+                      value={option}
+                      onChange={(e) => setOption(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder="Price" 
+                      className="pr-2" 
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder="Cost" 
+                      className="pr-2" 
+                      value={cost}
+                      onChange={(e) => setCost(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder="Stock" 
+                      value={stock}
+                      onChange={(e) => setStock(e.target.value)}
+                    />
                   </div>
                   <div className="flex items-center justify-center">
                     <button className="text-red-600 w-8 h-8">
@@ -115,10 +148,21 @@ export function AddItems() {
                   </div>
                 </div>
                 <div className="flex self-end w-2/3 pr-11 pb-2">
-                  <Button variant="outline" className="w-full text-green-500 border-green-500 border-2 border-spacing-8 border-dashed">Add Variety</Button>
+                  <Button 
+                    variant="outline" 
+                    className="w-full text-green-500 border-green-500 border-2 border-spacing-8 border-dashed"
+                  >
+                    Add Variety
+                  </Button>
                 </div>
                 <div className="flex justify-center">
-                  <Button type="submit" variant="outline" className="bg-green-500 text-white w-1/4">Add Item</Button>
+                  <Button 
+                    type="submit" 
+                    variant="outline" 
+                    className="bg-green-500 text-white w-1/4"
+                  >
+                    Add Item
+                  </Button>
                 </div>
               </form>
             </DialogContent>

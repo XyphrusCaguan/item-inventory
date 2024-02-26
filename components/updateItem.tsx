@@ -1,6 +1,6 @@
 "use cient";
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import {
     Dialog,
@@ -12,14 +12,53 @@ import {
   import { Input } from "@/components/ui/input";
 import { Button } from '@/components/ui/button';
 
-export function AddItems() {
-    // separate file crud ops
-  const [name, setName] = useState("");
-  const [category, setCategory] = useState("");
-  const [option, setOption] = useState("");
-  const [price, setPrice] = useState("");
-  const [cost, setCost] = useState("");
-  const [stock, setStock] = useState("");
+import "firebase/compat/auth";
+import "firebase/compat/firestore";
+import { ref, child, push, update, onValue } from "firebase/database";
+
+import { database } from "../database/config";
+
+interface IProduct {
+  uId: string;
+  name: string;
+  category: string;
+  option: string;
+  price: string;
+  cost: string;
+  stock: string;
+}
+
+export function UpdateItem() {
+
+  const [ name, setName ] = useState("");
+  const [ category, setCategory ] = useState("");
+  const [ option, setOption ] = useState("");
+  const [ price, setPrice ] = useState("");
+  const [ cost, setCost ] = useState("");
+  const [ stock, setStock ] = useState("");
+
+  const [items, setItems] = useState<IProduct[]>([]);
+
+  const fetchData = () => {
+    const products: IProduct[] = [];
+    const dbRef = ref(database);
+    onValue(dbRef, (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        if (childSnapshot.exists()) {
+          // console.log(snapshot.val());
+          let data = childSnapshot.val();
+          products.push(data);
+          setItems(products);
+        } else {
+          console.log("No data available");
+        }
+      });
+    });
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -30,55 +69,109 @@ export function AddItems() {
     setPrice('');
     setCost('');
     setStock('');
-    
-    console.log(name, category, option, price, cost, stock)
-    const data = [name, category, option, price, cost, stock]
 
-    const responseRaw = await fetch(
-      "https://iteminventory-d5ebd-default-rtdb.firebaseio.com/itemInventory.json",
-      {
-        mode: 'no-cors',
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-        },
-        body: JSON.stringify(data)
-      }
-    );
-    const response = responseRaw.json();
+    writeNewData(name, category , option , price , cost , stock);
   };
 
+  function writeNewData(name: string, category: string , option: string , price: string , cost: string , stock: string) {
+  
+    // A post entry.
+    const postData = {
+      name: name,
+      category: category,
+      option: option,
+      price: price,
+      cost: cost,
+      stock: stock
+    };
+  
+    // Get a key for a new Post.
+    // const newPostKey = push(child(ref(database))).key;
+  
+    // Write the new post's data simultaneously in the posts list and the user's post list.
+    const updates = {};
+    // updates[newPostKey] = postData;
+    // updates[newPostKey] = postData;
+  
+    return update(ref(database), postData);
+  }
+
+  function writeUserData(name: any , category: any , option: any , price: any , cost: any , stock: any) {
+    // const db = getDatabase();
+    push(ref(database), {
+      name: name,
+      category: category,
+      option : option,
+      price: price,
+      cost: cost,
+      stock: stock,
+    });
+  }
+
+
   return (
+    <>
     <main>
-        {/* ui component */}
         <div>
           <Dialog>
-            <DialogTrigger className="flex items-center bg-green-500 px-2 py-1 rounded text-white text-xl">
-            <svg viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" className="w-8">
-            <path d="M13 6C13 5.44771 12.5523 5 12 5C11.4477 5 11 5.44771 11 6V11H6C5.44771 11 5 11.4477 5 12C5 12.5523 5.44771 13 6 13H11V18C11 18.5523 11.4477 19 12 19C12.5523 19 13 18.5523 13 18V13H18C18.5523 13 19 12.5523 19 12C19 11.4477 18.5523 11 18 11H13V6Z" fill="currentColor"/>
-            </svg>
-              Add Product
+            <DialogTrigger className="flex items-center bg-gray-500 px-2 py-1 rounded text-white text-xl">
+              Edit
             </DialogTrigger>
-            <DialogContent className="max-w-screen-md ">
+            {items.map((item) => {
+            // console.log(product);
+            return (
+              <DialogContent className="max-w-screen-md " key={item.uId}>
               <DialogHeader>
-                <DialogTitle>Add Product</DialogTitle>
+                <DialogTitle>Edit Product</DialogTitle>
               </DialogHeader>
-              <form action="" onSubmit={handleSubmit} className="flex flex-col">
+              <form 
+                action="" 
+                onSubmit={handleSubmit} 
+                className="flex flex-col"
+              >
                 <div className="flex">
                   <div className="flex justify-around pr-2 pb-2">
-                    <Input type="text" placeholder="Category" className="mr-2" value={category}
-                    onChange={(e) => setCategory(e.target.value)}/>
-                    <Input type="text" placeholder="Name" className="pr-2" value={name}
-                    onChange={(e) => setName(e.target.value)}/>
-                    <Input type="text" placeholder="Options (small, medium, large etc.)" className="pr-2" value={option}
-                    onChange={(e) => setOption(e.target.value)}/>
-                    <Input type="text" placeholder="Price" className="pr-2" value={price}
-                    onChange={(e) => setPrice(e.target.value)}/>
-                    <Input type="text" placeholder="Cost" className="pr-2" value={cost}
-                    onChange={(e) => setCost(e.target.value)}/>
-                    <Input type="number" placeholder="Stock" value={stock}
-                    onChange={(e) => setStock(e.target.value)}/>
+                    <Input 
+                      type="text" 
+                      placeholder={item.category} 
+                      className="mr-2" 
+                      value={category}
+                      onChange={(e) => setCategory(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder={item.name} 
+                      className="pr-2" 
+                      value={name}
+                      onChange={(e) => setName(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder="Options (small, medium, large etc.)" 
+                      className="pr-2" 
+                      value={option}
+                      onChange={(e) => setOption(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder={item.price} 
+                      className="pr-2" 
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder={item.cost} 
+                      className="pr-2" 
+                      value={cost}
+                      onChange={(e) => setCost(e.target.value)}
+                    />
+                    <Input 
+                      type="text" 
+                      placeholder={item.stock} 
+                      value={stock}
+                      onChange={(e) => setStock(e.target.value)}
+                    />
                   </div>
                   <div className="flex items-center justify-center">
                     <button className="text-red-600 w-8 h-8">
@@ -86,17 +179,31 @@ export function AddItems() {
                     </button>
                   </div>
                 </div>
-                <div className="flex self-end w-3/4 pr-10 pb-2">
-                  <Button variant="outline" className="w-full text-green-500 border-green-500 border-2 border-spacing-8 border-dashed">Add Variety</Button>
+                <div className="flex self-end w-2/3 pr-11 pb-2">
+                  <Button 
+                    variant="outline" 
+                    className="w-full text-green-500 border-green-500 border-2 border-spacing-8 border-dashed"
+                  >
+                    Add Variety
+                  </Button>
                 </div>
                 <div className="flex justify-center">
-                  <Button type="submit" variant="outline" className="bg-green-500 text-white w-1/4">Add Item</Button>
+                  <Button 
+                    type="submit" 
+                    variant="outline" 
+                    className="bg-green-500 text-white w-1/4"
+                  >
+                    Add Item
+                  </Button>
                 </div>
               </form>
             </DialogContent>
+            )})}
+            
           </Dialog>
           </div>
     </main>
+    </>
   )
 
 }
