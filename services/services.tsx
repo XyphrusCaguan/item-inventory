@@ -7,6 +7,7 @@ import {
   update,
   set,
   child,
+  remove,
 } from "firebase/database";
 
 import { database } from "../database/config";
@@ -66,20 +67,9 @@ export function postItemData(uId: any ,name: any , category: any , option: any ,
     });
 }
 
-export function updateItemData(uid: any,name: any, category: any , option: any , price: any , cost: any , stock: any) {
-    const dbRef = ref(database);
+export function updateItemData(uuid: any,name: any, category: any , option: any , price: any , cost: any , stock: any) {
 
-    // A post entry.
-    // const postData = {
-    //     name: name,
-    //     category: category,
-    //     option: option,
-    //     price: price,
-    //     cost: cost,
-    //     stock: stock
-    // };
-    
-    set(ref(database, 'item' + uid), {
+    set(ref(database, 'item' + uuid), {
         name: name,
         category: category,
         option: option,
@@ -87,14 +77,5 @@ export function updateItemData(uid: any,name: any, category: any , option: any ,
         cost: cost,
         stock: stock
     });
-
-    // return update(ref(database), {
-    //     uId: uId,
-    //     name: name,
-    //     category: category,
-    //     option: option,
-    //     price: price,
-    //     cost: cost,
-    //     stock: stock
-    // });
+    console.log("data updated on ", uuid)
 }

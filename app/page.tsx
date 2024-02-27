@@ -12,13 +12,10 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-// import { AddItems } from "@/components/addItem";
-// import { GetItems } from "../components/getItems";
 import { GetItems, postItemData, updateItemData } from "../services/services";
 
 import { collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, getDocs } from "firebase/firestore";
 import { ref, onValue } from "firebase/database";
-// import { itemRef } from "../database/config";
 import { useEffect, useState } from "react";
 
 
@@ -47,6 +44,8 @@ export default function Home() {
     e.preventDefault();
     // let uid = uuid+1;
     // console.log(uuid);
+    setUuid('');
+
     updateItemData(uuid, name, category , option , price , cost , stock);
   }
 
@@ -173,10 +172,9 @@ export default function Home() {
         {/* <GetItems/> */}
         <div className="h-full flex gap-2">
           {GetItems().map((item, index) => {
-            // console.log(product);
             return (
               <div
-                className="bg-white ml-2 w-1/4 p-10 mt-3 rounded-md"
+                className="bg-white ml-2 w-1/4 h-1/2 p-10 mt-3 rounded-md"
                 key={index}
               >
                 <div className="flex flex-col">
@@ -186,14 +184,6 @@ export default function Home() {
                   </span>
                 </div>
                 <div className="flex flex-col justify-center my-4">
-                  <div>
-                    <Image
-                      src="/company-logo.png"
-                      width={250}
-                      height={250}
-                      alt="Logo of the Company"
-                    />
-                  </div>
                   <div className="flex justify-between">
                     <Button
                       variant="outline"
