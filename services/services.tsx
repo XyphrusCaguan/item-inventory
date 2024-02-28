@@ -54,35 +54,28 @@ export function GetItems() {
   return(items);
 }
 
-export function postItemData(uId: any ,name: any , category: any , option: any , price: any , cost: any , stock: any) {
-    // const db = getDatabase();
-    let Name = "ice cream"
-    let Category = "food"
-    let Variety = ["cheese", "vanilla", "chocolate"]
-    let Price = ["12", "34", "56"]
-    let Cost = ["23", "45", "67"]
-    let Stock = ["13", "46", "68"]
+export function postItemData(uId: any ,name: any , category: any , arrayOption: any , arrayPrice: any , arrayCost: any , arrayStock: any) {
 
     set(ref(database, 'item' + uId ), {
         uId: uId,
-        name: Name,
-        category: Category,
-        option : Variety,
-        price: Price,
-        cost: Cost,
-        stock: Stock,
+        name: name,
+        category: category,
+        option : arrayOption,
+        price: arrayPrice,
+        cost: arrayCost,
+        stock: arrayStock,
     });
 }
 
-export function updateItemData(uuid: any,name: any, category: any , option: any , price: any , cost: any , stock: any) {
+export function updateItemData(uuid: any,name: any, category: any , arrayOption: any , arrayPrice: any , arrayCost: any , arrayStock: any) {
 
     set(ref(database, 'item' + uuid), {
+        uId: uuid,
         name: name,
         category: category,
-        option: option,
-        price: price,
-        cost: cost,
-        stock: stock
+        option: arrayOption,
+        price: arrayPrice,
+        cost: arrayCost,
+        stock: arrayStock
     });
-    console.log("data updated on ", uuid)
 }

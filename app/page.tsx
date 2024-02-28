@@ -39,29 +39,60 @@ export default function Home() {
 
   const [ name, setName ] = useState("");
   const [ category, setCategory ] = useState("");
+
   const [ option, setOption ] = useState("");
+  const [ option2, setOption2 ] = useState("");
+  const [ option3, setOption3 ] = useState("");
+
   const [ price, setPrice ] = useState("");
+  const [ price2, setPrice2 ] = useState("");
+  const [ price3, setPrice3 ] = useState("");
+
   const [ cost, setCost ] = useState("");
+  const [ cost2, setCost2 ] = useState("");
+  const [ cost3, setCost3 ] = useState("");
+
   const [ stock, setStock ] = useState("");
+  const [ stock2, setStock2 ] = useState("");
+  const [ stock3, setStock3 ] = useState("");
+
   const [ uuid, setUuid ] = useState("");
 
-  console.log(GetItems());
+  const [show, setShow] = useState(false);
+
+  const handleAddVariety = async (e: any) => {
+    e.preventDefault();
+    setShow(true);
+  }
+
+  const handleCloseVariety = async (e: any) => {
+    e.preventDefault();
+    setShow(false);
+  }
+
+  // console.log(GetItems());
   let products = GetItems();
   const uId = Object.keys(products).length+1;
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    const arrayOption = [option, option2, option3]
+    const arrayPrice = [price, price2, price3]
+    const arrayCost = [cost, cost2, cost3]
+    const arrayStock = [stock, stock2, stock3]
 
-    postItemData(uId, name, category , option , price , cost , stock);
+    postItemData(uId, name, category , arrayOption , arrayPrice , arrayCost , arrayStock);
   }
 
   const handleUpdate = async (e: any) => {
     e.preventDefault();
-    // let uid = uuid+1;
-    // console.log(uuid);
-    setUuid('');
+    
+    const arrayOption = [option, option2, option3]
+    const arrayPrice = [price, price2, price3]
+    const arrayCost = [cost, cost2, cost3]
+    const arrayStock = [stock, stock2, stock3]
 
-    updateItemData(uuid, name, category , option , price , cost , stock);
+    updateItemData(uuid, name, category , arrayOption , arrayPrice , arrayCost , arrayStock);
   }
 
   return (
@@ -106,10 +137,9 @@ export default function Home() {
               </DialogHeader>
               <form 
                 action="" 
-                onSubmit={handleSubmit} 
-                className="flex flex-col"
+                className="flex"
               >
-                <div className="flex">
+                <div>
                   <div className="flex justify-around pr-2 pb-2">
                     <Input 
                       type="text" 
@@ -125,44 +155,119 @@ export default function Home() {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                     />
-                    <Input 
-                      type="text" 
-                      placeholder="Options (small, medium, large etc.)" 
-                      className="pr-2" 
-                      value={option}
-                      onChange={(e) => setOption(e.target.value)}
-                    />
-                    <Input 
-                      type="text" 
-                      placeholder="Price" 
-                      className="pr-2" 
-                      value={price}
-                      onChange={(e) => setPrice(e.target.value)}
-                    />
-                    <Input 
-                      type="text" 
-                      placeholder="Cost" 
-                      className="pr-2" 
-                      value={cost}
-                      onChange={(e) => setCost(e.target.value)}
-                    />
-                    <Input 
-                      type="text" 
-                      placeholder="Stock" 
-                      value={stock}
-                      onChange={(e) => setStock(e.target.value)}
-                    />
                   </div>
+                </div>
+                <div className="flex flex-col">
+                  {/* option --> stock inputs2 */}
+                <div className="flex gap-2 pb-2">
+                  <Input 
+                    type="text" 
+                    placeholder="Options (small, medium, large etc.)" 
+                    className="pr-2" 
+                    value={option}
+                    onChange={(e) => setOption(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Price" 
+                    className="pr-2" 
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Cost" 
+                    className="pr-2" 
+                    value={cost}
+                    onChange={(e) => setCost(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Stock" 
+                    value={stock}
+                    onChange={(e) => setStock(e.target.value)}
+                  />
                   <div className="flex items-center justify-center">
-                    <button className="text-red-600 w-8 h-8">
-                    <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z"/></svg>
-                    </button>
-                  </div>
+                  <button className="text-red-600 w-8 h-8" onClick={handleCloseVariety}>
+                  <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z"/></svg>
+                  </button>
+                </div>
+                </div>
+                <div className={`${show ? 'block' : 'hidden'} w-full h-full flex justify-center items-center gap-2 pb-2`}>
+                  {/* option --> stock inputs2 */}
+                  <Input 
+                    type="text" 
+                    placeholder="Options (small, medium, large etc.)" 
+                    className="pr-2" 
+                    value={option2}
+                    onChange={(e) => setOption2(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Price" 
+                    className="pr-2" 
+                    value={price2}
+                    onChange={(e) => setPrice2(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Cost" 
+                    className="pr-2" 
+                    value={cost2}
+                    onChange={(e) => setCost2(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Stock" 
+                    value={stock2}
+                    onChange={(e) => setStock2(e.target.value)}
+                  />
+                <div className="flex items-center justify-center">
+                  <button className="text-red-600 w-8 h-8" onClick={handleCloseVariety}>
+                  <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z"/></svg>
+                  </button>
+                </div>
+                </div>
+                <div className={`${show ? 'block' : 'hidden'} w-full h-full flex justify-center items-center gap-2 pb-2`}>
+                  {/* option --> stock inputs3 */}
+                  <Input 
+                    type="text" 
+                    placeholder="Options (small, medium, large etc.)" 
+                    className="pr-2" 
+                    value={option3}
+                    onChange={(e) => setOption3(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Price" 
+                    className="pr-2" 
+                    value={price3}
+                    onChange={(e) => setPrice3(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Cost" 
+                    className="pr-2" 
+                    value={cost3}
+                    onChange={(e) => setCost3(e.target.value)}
+                  />
+                  <Input 
+                    type="text" 
+                    placeholder="Stock" 
+                    value={stock3}
+                    onChange={(e) => setStock3(e.target.value)}
+                  />
+                <div className="flex items-center justify-center">
+                  <button className="text-red-600 w-8 h-8" onClick={handleCloseVariety}>
+                  <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z"/></svg>
+                  </button>
+                </div>
                 </div>
                 <div className="flex self-end w-2/3 pr-11 pb-2">
                   <Button 
                     variant="outline" 
                     className="w-full text-green-500 border-green-500 border-2 border-spacing-8 border-dashed"
+                    onClick={handleAddVariety}
                   >
                     Add Variety
                   </Button>
@@ -172,10 +277,12 @@ export default function Home() {
                     type="submit" 
                     variant="outline" 
                     className="bg-green-500 text-white w-1/4"
+                    onClick={handleSubmit}
                   >
                     Add Item
                   </Button>
                 </div>
+              </div>
               </form>
             </DialogContent>
           </Dialog>
@@ -270,21 +377,20 @@ export default function Home() {
                   </DialogTrigger>
                     <DialogContent className="max-w-screen-md " key={index}>
                     <DialogHeader>
-                      <DialogTitle>Edit Product</DialogTitle>
+                      <DialogTitle>Update Product</DialogTitle>
                     </DialogHeader>
                     <form 
                       action="" 
-                      onSubmit={handleUpdate} 
-                      className="flex flex-col"
+                      className="flex"
                     >
                       <div className="flex">
                         <div className="flex justify-around pr-2 pb-2">
                           <Input 
                               type="text" 
-                              placeholder="currrent index" 
+                              placeholder={item.uId} 
                               className="mr-2" 
-                              value={item.uId}
-                              onChange={(e) => setUuid(item.uId)}
+                              value={uuid}
+                              onChange={(e) => setUuid(e.target.value)}
                             />
                           <Input 
                             type="text" 
@@ -300,44 +406,110 @@ export default function Home() {
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                           />
-                          <Input 
-                            type="text" 
-                            placeholder={item.option} 
-                            className="pr-2" 
-                            value={option}
-                            onChange={(e) => setOption(e.target.value)}
-                          />
-                          <Input 
-                            type="text" 
-                            placeholder={item.price} 
-                            className="pr-2" 
-                            value={price}
-                            onChange={(e) => setPrice(e.target.value)}
-                          />
-                          <Input 
-                            type="text" 
-                            placeholder={item.cost} 
-                            className="pr-2" 
-                            value={cost}
-                            onChange={(e) => setCost(e.target.value)}
-                          />
-                          <Input 
-                            type="text" 
-                            placeholder={item.stock} 
-                            value={stock}
-                            onChange={(e) => setStock(e.target.value)}
-                          />
                         </div>
                       </div>
-                      <div className="flex justify-center">
+                      <div className="flex flex-col">
+                      {/* option --> stock update1 */}
+                      <div className="flex gap-2 pb-2">
+                        <Input 
+                          type="text" 
+                          placeholder={arrayOption[0][0]} 
+                          className="pr-2" 
+                          value={option}
+                          onChange={(e) => setOption(e.target.value)}
+                        />
+                        <Input 
+                          type="text" 
+                          placeholder={arrayPrice[0][0]} 
+                          className="pr-2" 
+                          value={price}
+                          onChange={(e) => setPrice(e.target.value)}
+                        />
+                        <Input 
+                          type="text" 
+                          placeholder={arrayCost[0][0]} 
+                          className="pr-2" 
+                          value={cost}
+                          onChange={(e) => setCost(e.target.value)}
+                        />
+                        <Input 
+                          type="text" 
+                          placeholder={arrayStock[0][0]} 
+                          value={stock}
+                          onChange={(e) => setStock(e.target.value)}
+                        />
+                      </div>
+                      <div className='w-full h-full flex justify-center items-center gap-2 pb-2'>
+                        {/* option --> stock update2 */}
+                        <Input 
+                          type="text" 
+                          placeholder={arrayOption[0][1]} 
+                          className="pr-2" 
+                          value={option2}
+                          onChange={(e) => setOption2(e.target.value)}
+                        />
+                        <Input 
+                          type="text" 
+                          placeholder={arrayPrice[0][1]} 
+                          className="pr-2" 
+                          value={price2}
+                          onChange={(e) => setPrice2(e.target.value)}
+                        />
+                        <Input 
+                          type="text" 
+                          placeholder={arrayCost[0][1]}
+                          className="pr-2" 
+                          value={cost2}
+                          onChange={(e) => setCost2(e.target.value)}
+                        />
+                        <Input 
+                          type="text" 
+                          placeholder={arrayStock[0][1]}
+                          value={stock2}
+                          onChange={(e) => setStock2(e.target.value)}
+                        />
+                      </div>
+                    <div className='w-full h-full flex justify-center items-center gap-2 pb-2'>
+                      {/* option --> stock update3 */}
+                      <Input 
+                        type="text" 
+                        placeholder={arrayOption[0][2]} 
+                        className="pr-2" 
+                        value={option3}
+                        onChange={(e) => setOption3(e.target.value)}
+                      />
+                      <Input 
+                        type="text" 
+                        placeholder={arrayPrice[0][2]}
+                        className="pr-2" 
+                        value={price3}
+                        onChange={(e) => setPrice3(e.target.value)}
+                      />
+                      <Input 
+                        type="text" 
+                        placeholder={arrayCost[0][2]} 
+                        className="pr-2" 
+                        value={cost3}
+                        onChange={(e) => setCost3(e.target.value)}
+                      />
+                      <Input 
+                        type="text" 
+                        placeholder={arrayStock[0][2]}
+                        value={stock3}
+                        onChange={(e) => setStock3(e.target.value)}
+                      />
+                    </div>
+                    <div className="flex justify-center">
                         <Button 
                           type="submit" 
                           variant="outline" 
-                          className="bg-green-500 text-white w-1/4"
+                          className="bg-green-500 text-white w-1/2"
+                          onClick={handleUpdate}
                         >
                           Update Item
                         </Button>
                       </div>
+                    </div>
                     </form>
                   </DialogContent>
                 </Dialog>
