@@ -11,13 +11,29 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card"
+
+
 
 import { GetItems, postItemData, updateItemData } from "../services/services";
 
 import { collection, addDoc, onSnapshot, updateDoc, doc, deleteDoc, query, where, getDocs } from "firebase/firestore";
 import { ref, onValue } from "firebase/database";
-import { useEffect, useState } from "react";
-
+import { JSXElementConstructor, PromiseLikeOfReactNode, ReactElement, ReactNode, ReactPortal, useEffect, useState } from "react";
 
 export default function Home() {
 
@@ -29,10 +45,9 @@ export default function Home() {
   const [ stock, setStock ] = useState("");
   const [ uuid, setUuid ] = useState("");
 
-  // console.log(GetItems());
+  console.log(GetItems());
   let products = GetItems();
   const uId = Object.keys(products).length+1;
-  // console.log(uId)
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -172,6 +187,18 @@ export default function Home() {
         {/* <GetItems/> */}
         <div className="h-full flex gap-2">
           {GetItems().map((item, index) => {
+
+            
+            const arrayOption: any[] = [];
+            const arrayPrice: any[] = [];
+            const arrayCost: any[] = [];
+            const arrayStock: any[] = [];
+
+            arrayOption.push(item.option)
+            arrayPrice.push(item.price)
+            arrayCost.push(item.cost)
+            arrayStock.push(item.stock)
+            console.log(arrayOption)
             return (
               <div
                 className="bg-white ml-2 w-1/4 h-1/2 p-10 mt-3 rounded-md"
@@ -185,30 +212,35 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col justify-center my-4">
                   <div className="flex justify-between">
-                    <Button
-                      variant="outline"
-                      className="bg-gray-950 border-gray-950 text-white w-1/4"
-                    >
-                      S
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="bg-gray-100 border-gray-950 text-black w-1/4"
-                    >
-                      M
-                    </Button>
-                    <Button
-                      variant="outline"
-                      className="bg-gray-100 border-gray-950 text-black w-1/4"
-                    >
-                      L
-                    </Button>
+                    {/* carousel options --> stocks */}
+                    
+                    <Carousel className="w-full max-w-xs">
+                      <CarouselContent>
+                        {Array.from({ length: 3 }).map((_, index) => (
+                          <CarouselItem key={index}>
+                            <div className="p-1">
+                              <Card>
+                                <CardContent className="flex aspect-square items-center justify-center p-6">
+                                  {arrayOption.map((arrayoption)=>{
+                                    return(
+                                      <div key={index}>
+                                        <span className="text-4xl font-semibold">{arrayoption[index]}</span>
+                                      </div>
+                                    )
+                                  })}
+                                  {/* <span className="text-4xl font-semibold">{arrayPrice[index]}</span>
+                                  <span className="text-4xl font-semibold">{arrayCost[index]}</span>
+                                  <span className="text-4xl font-semibold">{arrayStock[index]}</span> */}
+                                </CardContent>
+                              </Card>
+                            </div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+                      <CarouselPrevious />
+                      <CarouselNext />
+                    </Carousel>
                   </div>
-                </div>
-                <div className="flex flex-col">
-                  <span className="text-2xl">Price: ${item.price}</span>
-                  <span className="text-2xl">Cost: ${item.cost}</span>
-                  <span className="text-2xl">Stock: {item.stock}</span>
                 </div>
                 <div className="flex pt-5">
                 <Dialog>

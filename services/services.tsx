@@ -56,14 +56,21 @@ export function GetItems() {
 
 export function postItemData(uId: any ,name: any , category: any , option: any , price: any , cost: any , stock: any) {
     // const db = getDatabase();
+    let Name = "ice cream"
+    let Category = "food"
+    let Variety = ["cheese", "vanilla", "chocolate"]
+    let Price = ["12", "34", "56"]
+    let Cost = ["23", "45", "67"]
+    let Stock = ["13", "46", "68"]
+
     set(ref(database, 'item' + uId ), {
         uId: uId,
-        name: name,
-        category: category,
-        option : option,
-        price: price,
-        cost: cost,
-        stock: stock,
+        name: Name,
+        category: Category,
+        option : Variety,
+        price: Price,
+        cost: Cost,
+        stock: Stock,
     });
 }
 
