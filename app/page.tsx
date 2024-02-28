@@ -220,11 +220,32 @@ export default function Home() {
                           <CarouselItem key={index}>
                             <div className="p-1">
                               <Card>
-                                <CardContent className="flex aspect-square items-center justify-center p-6">
+                                <CardContent className="flex aspect-square items-center justify-center p-6 flex-col">
                                   {arrayOption.map((arrayoption)=>{
                                     return(
                                       <div key={index}>
                                         <span className="text-4xl font-semibold">{arrayoption[index]}</span>
+                                      </div>
+                                    )
+                                  })}
+                                  {arrayPrice.map((arrayprice)=>{
+                                    return(
+                                      <div key={index}>
+                                        <span className="text-4xl font-semibold">Price: ${arrayprice[index]}</span>
+                                      </div>
+                                    )
+                                  })}
+                                  {arrayCost.map((arraycost)=>{
+                                    return(
+                                      <div key={index}>
+                                        <span className="text-4xl font-semibold">Cost: ${arraycost[index]}</span>
+                                      </div>
+                                    )
+                                  })}
+                                  {arrayStock.map((arraystock)=>{
+                                    return(
+                                      <div key={index}>
+                                        <span className="text-4xl font-semibold">Stock: {arraystock[index]}</span>
                                       </div>
                                     )
                                   })}
