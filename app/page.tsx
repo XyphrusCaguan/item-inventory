@@ -97,7 +97,7 @@ export default function Home() {
 
   return (
     <>
-    <main className="min-h-screen p-2">
+    <main className="min-h-screen min-w-128 p-2">
       {/* Profile */}
       <div className="flex justify-end">
         <div className="flex justify-around rounded-3xl bg-slate-100 w-52 p-2">

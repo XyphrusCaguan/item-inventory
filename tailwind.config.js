@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      minWidth: {
+        '128': '69rem',
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
