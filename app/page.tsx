@@ -337,14 +337,14 @@ export default function Home() {
                                   {arrayPrice.map((arrayprice)=>{
                                     return(
                                       <div key={index}>
-                                        <span className="text-2xl font-semibold">Price: ${arrayprice[index]}</span>
+                                        <span className="text-2xl font-semibold">Price: ₱{arrayprice[index]}</span>
                                       </div>
                                     )
                                   })}
                                   {arrayCost.map((arraycost)=>{
                                     return(
                                       <div key={index}>
-                                        <span className="text-2xl font-semibold">Cost: ${arraycost[index]}</span>
+                                        <span className="text-2xl font-semibold">Cost: ₱{arraycost[index]}</span>
                                       </div>
                                     )
                                   })}
