@@ -194,7 +194,7 @@ export default function Home() {
                 </div>
                 <div className="flex flex-col">
                   {/* option --> stock inputs2 */}
-                <div className="flex gap-2 pb-2">
+                <div className="flex gap-2 pb-2 pr-10">
                   <Input 
                     type="text" 
                     placeholder="Options (small, medium, large etc.)" 
@@ -410,60 +410,81 @@ export default function Home() {
                       className="flex"
                     >
                       <div className="flex">
-                        <div className="flex justify-around pr-2 pb-2">
-                          <Input 
+                        <div className="flex justify-around pr-2 pb-2 gap-2">
+                          <div className="flex-col">
+                            <span className="text-md">Item #</span>
+                            <Input 
+                                type="text" 
+                                placeholder={item.uId} 
+                                className="mr-2" 
+                                value={uuid}
+                                onChange={(e) => setUuid(e.target.value)}
+                              />
+                          </div>
+                          <div>
+                            <span className="text-md">Category</span>
+                            <Input 
                               type="text" 
-                              placeholder={item.uId} 
+                              placeholder={item.category} 
                               className="mr-2" 
-                              value={uuid}
-                              onChange={(e) => setUuid(e.target.value)}
+                              value={category}
+                              onChange={(e) => setCategory(e.target.value)}
                             />
-                          <Input 
-                            type="text" 
-                            placeholder={item.category} 
-                            className="mr-2" 
-                            value={category}
-                            onChange={(e) => setCategory(e.target.value)}
-                          />
-                          <Input 
-                            type="text" 
-                            placeholder={item.name} 
-                            className="pr-2" 
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                          />
+                          </div>
+                          <div>
+                          <span className="text-md">Name</span>
+                            <Input 
+                              type="text" 
+                              placeholder={item.name} 
+                              className="pr-2" 
+                              value={name}
+                              onChange={(e) => setName(e.target.value)}
+                            />
+                          </div>
                         </div>
                       </div>
                       <div className="flex flex-col">
                       {/* option --> stock update1 */}
                       <div className="flex gap-2 pb-2">
-                        <Input 
-                          type="text" 
-                          placeholder={arrayOption[0][0]} 
-                          className="pr-2" 
-                          value={option}
-                          onChange={(e) => setOption(e.target.value)}
-                        />
-                        <Input 
-                          type="text" 
-                          placeholder={arrayPrice[0][0]} 
-                          className="pr-2" 
-                          value={price}
-                          onChange={(e) => setPrice(e.target.value)}
-                        />
-                        <Input 
-                          type="text" 
-                          placeholder={arrayCost[0][0]} 
-                          className="pr-2" 
-                          value={cost}
-                          onChange={(e) => setCost(e.target.value)}
-                        />
-                        <Input 
-                          type="text" 
-                          placeholder={arrayStock[0][0]} 
-                          value={stock}
-                          onChange={(e) => setStock(e.target.value)}
-                        />
+                        <div>
+                          <span className="text-md">Variety</span>
+                          <Input 
+                            type="text" 
+                            placeholder={arrayOption[0][0]} 
+                            className="pr-2" 
+                            value={option}
+                            onChange={(e) => setOption(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <span className="text-md">Price</span>
+                          <Input 
+                            type="text" 
+                            placeholder={arrayPrice[0][0]} 
+                            className="pr-2" 
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <span className="text-md">Cost</span>
+                          <Input 
+                            type="text" 
+                            placeholder={arrayCost[0][0]} 
+                            className="pr-2" 
+                            value={cost}
+                            onChange={(e) => setCost(e.target.value)}
+                          />
+                        </div>
+                        <div>
+                          <span className="text-md">Stock</span>
+                          <Input 
+                            type="text" 
+                            placeholder={arrayStock[0][0]} 
+                            value={stock}
+                            onChange={(e) => setStock(e.target.value)}
+                          />
+                        </div>
                       </div>
                       <div className='w-full h-full flex justify-center items-center gap-2 pb-2'>
                         {/* option --> stock update2 */}
