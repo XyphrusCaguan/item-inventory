@@ -117,7 +117,7 @@ export default function Home() {
       </div>
       
       {/* Products Section */}
-      <div className="bg-slate-300 rounded h-screen mt-5">
+      <div className="bg-slate-100 rounded h-full mt-5">
         {/* Header */}
         <div className="flex justify-between px-5 pt-2 items-center">
           <div>
@@ -290,9 +290,8 @@ export default function Home() {
         </div>
         {/* Contents */}
         
-        {/* First Product Card */}
-        {/* <GetItems/> */}
-        <div className="h-full flex gap-2">
+        {/* Product Card */}
+        <div className="h-full gap-16 p-12 grid grid-cols-3">
           {GetItems().map((item, index) => {
 
             
@@ -308,7 +307,7 @@ export default function Home() {
             console.log(arrayOption)
             return (
               <div
-                className="bg-white ml-2 w-1/4 h-1/2 p-10 mt-3 rounded-md"
+                className="bg-white ml-2 w-full h-full p-10 mt-3 rounded-md"
                 key={index}
               >
                 <div className="flex flex-col">
@@ -318,47 +317,44 @@ export default function Home() {
                   </span>
                 </div>
                 <div className="flex flex-col justify-center my-4">
-                  <div className="flex justify-between">
+                  <div className="flex justify-center w-full">
                     {/* carousel options --> stocks */}
                     
-                    <Carousel className="w-full max-w-xs">
+                    <Carousel className="w-3/4 h-full">
                       <CarouselContent>
                         {Array.from({ length: 3 }).map((_, index) => (
                           <CarouselItem key={index}>
                             <div className="p-1">
                               <Card>
-                                <CardContent className="flex aspect-square items-center justify-center p-6 flex-col">
+                                <CardContent className="flex aspect-square justify-center p-6 flex-col gap-2">
                                   {arrayOption.map((arrayoption)=>{
                                     return(
                                       <div key={index}>
-                                        <span className="text-4xl font-semibold">{arrayoption[index]}</span>
+                                        <span className="text-3xl font-semibold">{arrayoption[index]}</span>
                                       </div>
                                     )
                                   })}
                                   {arrayPrice.map((arrayprice)=>{
                                     return(
                                       <div key={index}>
-                                        <span className="text-4xl font-semibold">Price: ${arrayprice[index]}</span>
+                                        <span className="text-2xl font-semibold">Price: ${arrayprice[index]}</span>
                                       </div>
                                     )
                                   })}
                                   {arrayCost.map((arraycost)=>{
                                     return(
                                       <div key={index}>
-                                        <span className="text-4xl font-semibold">Cost: ${arraycost[index]}</span>
+                                        <span className="text-2xl font-semibold">Cost: ${arraycost[index]}</span>
                                       </div>
                                     )
                                   })}
                                   {arrayStock.map((arraystock)=>{
                                     return(
                                       <div key={index}>
-                                        <span className="text-4xl font-semibold">Stock: {arraystock[index]}</span>
+                                        <span className="text-2xl font-semibold">Stock: {arraystock[index]}</span>
                                       </div>
                                     )
                                   })}
-                                  {/* <span className="text-4xl font-semibold">{arrayPrice[index]}</span>
-                                  <span className="text-4xl font-semibold">{arrayCost[index]}</span>
-                                  <span className="text-4xl font-semibold">{arrayStock[index]}</span> */}
                                 </CardContent>
                               </Card>
                             </div>
