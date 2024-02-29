@@ -17,6 +17,9 @@ module.exports = {
       },
     },
     extend: {
+      zIndex: {
+        '99': '99',
+      },
       minWidth: {
         '128': '69rem',
       },

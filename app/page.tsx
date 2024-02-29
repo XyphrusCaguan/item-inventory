@@ -60,6 +60,9 @@ export default function Home() {
 
   const [show, setShow] = useState(false);
 
+  const [ postalert, setPostAlert] = useState(false);
+  const [ updatealert, setUpdateAlert] = useState(false);
+
   const handleAddVariety = async (e: any) => {
     e.preventDefault();
     setShow(true);
@@ -80,8 +83,17 @@ export default function Home() {
     const arrayPrice = [price, price2, price3]
     const arrayCost = [cost, cost2, cost3]
     const arrayStock = [stock, stock2, stock3]
+    setPostAlert(true)
+
+    const timePost = setTimeout(() => {
+      // After 3 seconds set the show value to false
+      setPostAlert(false)
+    }, 3000)
 
     postItemData(uId, name, category , arrayOption , arrayPrice , arrayCost , arrayStock);
+    return () => {
+      clearTimeout(timePost)
+    }
   }
 
   const handleUpdate = async (e: any) => {
@@ -91,13 +103,36 @@ export default function Home() {
     const arrayPrice = [price, price2, price3]
     const arrayCost = [cost, cost2, cost3]
     const arrayStock = [stock, stock2, stock3]
+    setUpdateAlert(true)
+
+    const timeUpdate = setTimeout(() => {
+      // After 3 seconds set the show value to false
+      setUpdateAlert(false)
+    }, 3000)
 
     updateItemData(uuid, name, category , arrayOption , arrayPrice , arrayCost , arrayStock);
   }
 
+  useEffect(() => {
+    // when the component is mounted, the alert is displayed for 3 seconds
+    setTimeout(() => {
+      setPostAlert(false);
+    }, 3000);
+
+    setTimeout(() => {
+      setUpdateAlert(false);
+    }, 3000);
+  }, []); 
+
   return (
     <>
     <main className="min-h-screen min-w-128 p-2">
+      {postalert && <div className={`alert alert-${postalert ? 'absolute ': 'hidden'} fixed bg-green-400 w-1/4 h-16 p-4 z-99 inset-x-0 mx-auto text-center`}>
+        <span className="text-black text-2xl">Data added!</span>  
+      </div>}
+      {updatealert && <div className={`alert alert-${updatealert ? 'absolute' : 'hidden'} fixed bg-green-400 w-1/4 h-16 p-4 z-99 inset-x-0 mx-auto text-center`}>
+        <span className="text-black text-2xl">Data updated!</span>  
+      </div>}
       {/* Profile */}
       <div className="flex justify-end">
         <div className="flex justify-around rounded-3xl bg-slate-100 w-52 p-2">
@@ -187,11 +222,6 @@ export default function Home() {
                     value={stock}
                     onChange={(e) => setStock(e.target.value)}
                   />
-                  <div className="flex items-center justify-center">
-                  <button className="text-red-600 w-8 h-8" onClick={handleCloseVariety}>
-                  <svg fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5.755,20.283,4,8H20L18.245,20.283A2,2,0,0,1,16.265,22H7.735A2,2,0,0,1,5.755,20.283ZM21,4H16V3a1,1,0,0,0-1-1H9A1,1,0,0,0,8,3V4H3A1,1,0,0,0,3,6H21a1,1,0,0,0,0-2Z"/></svg>
-                  </button>
-                </div>
                 </div>
                 <div className={`${show ? 'block' : 'hidden'} w-full h-full flex justify-center items-center gap-2 pb-2`}>
                   {/* option --> stock inputs2 */}
